@@ -22,7 +22,7 @@
 </head>
 <body>
     <table id="activityList" class="table table-hover">
-        <thead>
+        <thead class="thead-dark">
             <tr>
                 <th>Nama</th>
                 <th>Waktu</th>
@@ -104,13 +104,13 @@
     <script>
         var activityList = document.getElementById('activityList');
         var query = firebase.database().ref('activities').orderByKey();
-        var rowIndex = 1;
+        var rowId = 0;
 
         query.once("value").then(function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
                 var key = childSnapshot.key;
                 var childData = childSnapshot.val();
-                console.log(childData.plat);
+                console.log(childData);
             });
         });
     
