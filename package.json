@@ -1,0 +1,27 @@
+{
+  "name": "sensor-tracking",
+  "version": "1.0.0",
+  "description": "sensor tracking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/azharizkita/sensor-tracking.git"
+  },
+  "keywords": [
+    "sensor"
+  ],
+  "author": "Wian & Rizki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/azharizkita/sensor-tracking/issues"
+  },
+  "homepage": "https://github.com/azharizkita/sensor-tracking#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  }
+}

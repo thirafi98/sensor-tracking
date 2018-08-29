@@ -1,0 +1,153 @@
+<html>
+<head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/datatable.css">
+<script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/datatable.js"></script>
+<script src="js/datatable.bootstrap.js"></script>
+<script>
+    var config = {
+        apiKey: "AIzaSyBSyZmWY93bQ3gYyOIG8FiGMg1Ssb3mkHY",
+        authDomain: "tproject-72164.firebaseapp.com",
+        databaseURL: "https://tproject-72164.firebaseio.com",
+        projectId: "tproject-72164",
+        storageBucket: "tproject-72164.appspot.com",
+        messagingSenderId: "975307930970"
+    };
+    firebase.initializeApp(config);
+</script>
+</head>
+<body>
+    <table id="activityList" class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nama</th>
+                <th>Waktu</th>
+                <th>Tujuan</th>
+                <th>Plat</th>
+                <th>Keberangkatan</th>
+                <th>Kedatangan</th>
+                <th>Notifikasi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+                <td><!-- TODO --></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createActivity">Create Activity</button>
+
+<div class="modal fade" id="createActivity" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createActivityTittle">Create Activity</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form>
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" class="form-control" id="nama" placeholder="Nama">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" class="form-control" id="tanggal">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="waktu">Waktu</label>
+                            <input type="time" class="form-control" id="waktu">
+                        </div>
+                </div>
+                <div class="form-group">
+                        <label for="tujuan">Tujuan</label>
+                        <input type="text" class="form-control" id="tujuan" placeholder="Tujuan">
+                    </div>
+                    <div class="form-group">
+                        <label for="plat">Plat</label>
+                        <input type="text" class="form-control" id="plat" placeholder="Plat">
+                    </div>
+                    <div class="form-group">
+                        <label for="keberangkatan">Keberangkkatan</label>
+                        <input type="text" class="form-control" id="keberangkatan" placeholder="Keberangkatan">
+                    </div>
+                    <div class="form-group">
+                        <label for="kedatangan">Kedatangan</label>
+                        <input type="text" class="form-control" id="kedatangan" placeholder="Kedatangaan">
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="createActivity()">Create Activity</button>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+    <script>
+        var activityList = document.getElementById('activityList');
+        var query = firebase.database().ref('activities').orderByKey();
+        var rowId = 0;
+
+        query.once("value").then(function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                var key = childSnapshot.key;
+                var childData = childSnapshot.val();
+                console.log(childData);
+            });
+        });
+    
+        function createActivity(){
+            var nama = document.getElementById('nama').value;
+            var tanggal = document.getElementById('tanggal').value;
+            var waktu = document.getElementById('waktu').value;
+            var tujuan = document.getElementById('tujuan').value;
+            var plat = document.getElementById('plat').value;
+            var keberangkatan = document.getElementById('keberangkatan').value;
+            var kedatangan = document.getElementById('kedatangan').value;
+        
+            var data = {
+                nama: nama,
+                waktu: tanggal + " " + waktu,
+                tujuan: tujuan,
+                plat: plat,
+                keberangkatan: keberangkatan,
+                kedatangan: kedatangan,
+                notifikasi: "---"
+            }
+        
+            var create = {};
+            create['/activities/' + plat] = data;
+            firebase.database().ref().update(create);
+            reload_page();
+        }
+
+        function reload_page(){
+            window.location.reload();
+        }
+
+        $(document).ready(function() {
+            $('#activityList').DataTable();
+        });
+    
+    </script>
+ 
+</body>
+</html>
